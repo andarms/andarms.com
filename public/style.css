@@ -1,0 +1,62 @@
+/* Minimalist, accessible defaults */
+:root {
+  --bg: #0f0f0f;
+  --fg: #eaeaea;
+  --muted: #b3b3b3;
+  --link: #7cc4ff;
+  --link-hover: #b3ddff;
+  --accent: #ffffff1a;
+  /* Inform the browser we're using a dark color scheme (affects form controls, scrollbars, etc.) */
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font: 16px/1.6 system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.container {
+  max-width: 720px;
+  margin: 18vh auto 0;
+  padding: 0 20px;
+}
+
+h1 {
+  font-size: clamp(28px, 6vw, 44px);
+  margin: 0 0 6px;
+  letter-spacing: 0.2px;
+}
+
+.tagline {
+  margin: 0 0 24px;
+  color: var(--muted);
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+}
+
+.links a {
+  color: var(--link);
+  text-decoration: none;
+  border-bottom: 1px dashed rgba(30, 157, 136, 0.4);
+}
+
+.links a:hover,
+.links a:focus-visible {
+  color: var(--link-hover);
+  border-bottom-style: solid;
+}
