@@ -3,8 +3,7 @@
   --bg: #0f0f0f;
   --fg: #eaeaea;
   --muted: #b3b3b3;
-  --link: #7cc4ff;
-  --link-hover: #b3ddff;
+  --link: #76ff81;
   --accent: #ffffff1a;
   /* Inform the browser we're using a dark color scheme (affects form controls, scrollbars, etc.) */
   color-scheme: dark;
@@ -29,9 +28,33 @@ body {
   color: var(--fg);
 }
 
+/* Site header */
+.site-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 14px 20px;
+  width: 100%;
+  max-width: 800px;
+}
+
+
+.site-nav .brand {
+  margin-right: auto;
+  font-size: 20px;
+  letter-spacing: 0.2px;
+}
+
 .container {
-  max-width: 720px;
-  margin: 18vh auto 0;
+  max-width: 800px;
+  margin: 14vh auto 0;
   padding: 0 20px;
 }
 
@@ -52,14 +75,14 @@ h1 {
   gap: 14px 18px;
 }
 
-.links a {
+a {
   color: var(--link);
   text-decoration: none;
-  border-bottom: 1px dashed rgba(30, 157, 136, 0.4);
+  border-bottom: 2px dashed rgba(30, 157, 136, 0.4);
 }
 
-.links a:hover,
-.links a:focus-visible {
-  color: var(--link-hover);
-  border-bottom-style: solid;
+a:hover,
+a:focus-visible {
+  background-color: #ffffff;
+  color: var(--bg);
 }
