@@ -56,7 +56,7 @@ body {
 
 .container {
   max-width: 800px;
-  width: 800px;
+  width: 100%;
   margin: 14vh auto 0;
   padding: 0 20px;
   flex: 1 0 auto;
