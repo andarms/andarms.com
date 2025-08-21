@@ -1,5 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+const posts: CollectionEntry<"blog">[] = (
+  await getCollection(
+    "blog",
+    (entry: CollectionEntry<"blog">) => !entry.data.draft
+  )
+).sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    new Date(b.data.date as any).getTime() -
+    new Date(a.data.date as any).getTime()
+);
 ---
 
 <Base
@@ -8,5 +20,17 @@ import Base from "../layouts/Base.astro";
 >
   <h1>Blog</h1>
   <p class="tagline">Notes, posts, and updates.</p>
-  <p>Coming soon.</p>
+
+  <ul class="post-list">
+    {
+      posts.map((post: CollectionEntry<"blog">) => (
+        <li>
+          <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+          <small class="muted">
+            {new Date(post.data.date as any).toLocaleDateString()}
+          </small>
+        </li>
+      ))
+    }
+  </ul>
 </Base>

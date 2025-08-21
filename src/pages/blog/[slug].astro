@@ -1,0 +1,30 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection(
+    "blog",
+    (entry: CollectionEntry<"blog">) => !entry.data.draft
+  );
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props as { post: CollectionEntry<"blog"> };
+const { Content } = await post.render();
+---
+
+<Base
+  title={`${post.data.title} — andarms`}
+  description={post.data.description ?? undefined}
+>
+  <article class="prose">
+    <h1>{post.data.title}</h1>
+    <p class="muted">{new Date(post.data.date as any).toLocaleDateString()}</p>
+    <Content />
+  </article>
+</Base>

@@ -1,5 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+const projects: CollectionEntry<"project">[] = (
+  await getCollection(
+    "project",
+    (entry: CollectionEntry<"project">) => !entry.data.draft
+  )
+).sort(
+  (a: CollectionEntry<"project">, b: CollectionEntry<"project">) =>
+    new Date(b.data.date as any).getTime() -
+    new Date(a.data.date as any).getTime()
+);
 ---
 
 <Base
@@ -8,5 +20,32 @@ import Base from "../layouts/Base.astro";
 >
   <h1>Projects</h1>
   <p class="tagline">A few things I'm building and have built.</p>
-  <p>Coming soon.</p>
+
+  <ul class="project-list">
+    {
+      projects.map((p) => (
+        <li>
+          <a href={`/project/${p.slug}`}>
+            <strong>{p.data.title}</strong>
+          </a>
+          {p.data.description && <span> — {p.data.description}</span>}
+          <div class="muted">
+            {p.data.url && (
+              <a href={p.data.url} target="_blank" rel="noopener noreferrer">
+                Site
+              </a>
+            )}
+            {p.data.repo && (
+              <>
+                {p.data.url && " · "}
+                <a href={p.data.repo} target="_blank" rel="noopener noreferrer">
+                  Repo
+                </a>
+              </>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
 </Base>

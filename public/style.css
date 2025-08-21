@@ -3,7 +3,7 @@
   --bg: #0f0f0f;
   --fg: #eaeaea;
   --muted: #b3b3b3;
-  --link: #76ff81;
+  --link: #4ADE80;
   --accent: #ffffff1a;
   /* Inform the browser we're using a dark color scheme (affects form controls, scrollbars, etc.) */
   color-scheme: dark;
@@ -48,7 +48,6 @@ body {
 
 .site-nav .brand {
   margin-right: auto;
-  font-size: 20px;
   letter-spacing: 0.2px;
 }
 
@@ -56,6 +55,55 @@ body {
   max-width: 800px;
   margin: 14vh auto 0;
   padding: 0 20px;
+}
+
+/* Content lists */
+.post-list,
+.project-list {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 2rem;
+}
+
+.post-list li,
+.project-list li {
+  margin: 0.5rem 0;
+}
+
+.post-list a {
+  color: #8cd3ff;
+  text-decoration: none;
+}
+
+.post-list a:hover {
+  text-decoration: underline;
+}
+
+.muted {
+  color: #9aa0a6;
+  margin-left: .5rem;
+}
+
+/* Simple prose styling */
+.prose {
+  line-height: 1.7;
+}
+
+.prose h1,
+.prose h2,
+.prose h3 {
+  margin-top: 1.5rem;
+}
+
+.prose pre {
+  background: #171717;
+  padding: .75rem;
+  border-radius: 6px;
+  overflow-x: auto;
+}
+
+.prose code {
+  color: #ffcf8c;
 }
 
 h1 {
