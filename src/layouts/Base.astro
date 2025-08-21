@@ -7,6 +7,7 @@ const {
   title = "andarms",
   description = "Personal site of Adrian Manjarres (andarms)",
 } = Astro.props as Props;
+const year = new Date().getFullYear();
 ---
 
 <!doctype html>
@@ -36,5 +37,17 @@ const {
     <main class="container" role="main">
       <slot />
     </main>
+    <footer class="site-footer" role="contentinfo">
+      <span>Made with 🖤 in Colombia</span>
+      <img
+        class="flag flag--co"
+        src="/colombia.svg"
+        width="20"
+        height="14"
+        alt="Colombia flag"
+        loading="eager"
+      />
+      <span>© {year} andarms</span>
+    </footer>
   </body>
 </html>

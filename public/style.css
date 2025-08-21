@@ -26,6 +26,9 @@ body {
   font-style: normal;
   background: var(--bg);
   color: var(--fg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Site header */
@@ -53,8 +56,32 @@ body {
 
 .container {
   max-width: 800px;
+  width: 800px;
   margin: 14vh auto 0;
   padding: 0 20px;
+  flex: 1 0 auto;
+  /* allow main to take available space so footer sits at bottom */
+}
+
+/* Footer */
+.site-footer {
+  margin-top: auto;
+  /* push footer to bottom when content is short */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 16px;
+  color: var(--muted);
+  text-align: center;
+  gap: 8px;
+}
+
+.site-footer .flag {
+  display: inline-block;
+  height: 14px;
+  width: auto;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px #00000033 inset;
 }
 
 /* Content lists */
@@ -71,7 +98,7 @@ body {
 }
 
 .post-list a {
-  color: #8cd3ff;
+  /* color: #8cd3ff; */
   text-decoration: none;
 }
 
