@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://andarms.com/sitemap-index.xml
