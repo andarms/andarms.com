@@ -23,7 +23,7 @@ const posts: CollectionEntry<"blog">[] = (
 
   <ul class="post-list">
     {
-      posts.map((post: CollectionEntry<"blog">) => (
+      posts.map((post) => (
         <li>
           <a href={`/blog/${post.slug}`}>{post.data.title}</a>
           <small class="muted">
