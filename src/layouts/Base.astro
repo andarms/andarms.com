@@ -26,6 +26,11 @@ const currentPath = Astro.url.pathname;
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/style.css" />
+    <script is:inline>
+      // Prevent flash of wrong theme
+      const savedTheme = localStorage.getItem("theme") || "dark";
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    </script>
   </head>
   <body>
     <header class="site-header">
@@ -38,6 +43,14 @@ const currentPath = Astro.url.pathname;
         <a href="/blogs" class={currentPath.startsWith("/blog") ? "active" : ""}
           >Blogs</a
         >
+        <button
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="Toggle theme"
+        >
+          <span class="sun-icon">🌞</span>
+          <span class="moon-icon" style="display: none;">🌚</span>
+        </button>
       </nav>
     </header>
     <main class="container" role="main">
@@ -55,6 +68,41 @@ const currentPath = Astro.url.pathname;
       />
       <span>© {year} @andarms</span>
     </footer>
+
+    <script is:inline>
+      // Theme toggle functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const themeToggle = document.getElementById("theme-toggle");
+        const sunIcon = themeToggle.querySelector(".sun-icon");
+        const moonIcon = themeToggle.querySelector(".moon-icon");
+
+        // Get current theme (already set by head script)
+        const currentTheme =
+          document.documentElement.getAttribute("data-theme") || "dark";
+        updateThemeIcons(currentTheme);
+
+        themeToggle.addEventListener("click", () => {
+          const currentTheme =
+            document.documentElement.getAttribute("data-theme");
+          const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+          document.documentElement.setAttribute("data-theme", newTheme);
+          localStorage.setItem("theme", newTheme);
+          updateThemeIcons(newTheme);
+        });
+
+        function updateThemeIcons(theme) {
+          if (theme === "light") {
+            sunIcon.style.display = "none";
+            moonIcon.style.display = "block";
+          } else {
+            sunIcon.style.display = "block";
+            moonIcon.style.display = "none";
+          }
+        }
+      });
+    </script>
+
     <script
       is:inline
       async

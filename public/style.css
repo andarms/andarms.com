@@ -1,15 +1,55 @@
 /* Minimalist, accessible defaults */
 :root {
+  /* Dark Mode */
   --bg: #0f0f0f;
   --fg: #eaeaea;
-  --muted: #b3b3b3;
-  --link: #50C878;
-  --link-hover: #3BAA5C;
-  --link-muted: #5FD670;
-  --accent: #ffffff1a;
-  /* Inform the browser we're using a dark color scheme (affects form controls, scrollbars, etc.) */
+  --muted: #8db89e;
+  /* Green-tinted gray for monochromatic theme */
+  --link: #66BB6A;
+  --link-hover: #81C784;
+  --link-muted: #4ade80;
+  --accent: rgba(255, 255, 255, 0.1);
   color-scheme: dark;
 }
+
+[data-theme="light"] {
+  /* Light Mode */
+  --bg: #fafbf7;
+  --fg: #0f1419;
+  --muted: #4a6741;
+  /* Dark green-gray for light theme contrast */
+  --link: #2D7D32;
+  --link-hover: #1B5E20;
+  --link-muted: #66BB6A;
+  --accent: rgba(0, 0, 0, 0.08);
+  color-scheme: light;
+}
+
+/* Theme toggle */
+.theme-toggle {
+  background: none;
+  border: none;
+  color: var(--muted);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle:hover {
+  background: var(--accent);
+  color: var(--link);
+}
+
+.theme-toggle span {
+  font-size: 20px;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
 
 * {
   box-sizing: border-box;
@@ -68,7 +108,6 @@ body {
   background: linear-gradient(135deg, rgba(80, 200, 120, 0.12), rgba(80, 200, 120, 0.06));
   border-color: rgba(80, 200, 120, 0.25);
   color: var(--link-muted);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .container {
@@ -161,7 +200,7 @@ h1 {
 
 .tagline {
   margin: 0 0 36px;
-  color: var(--link-muted);
+  color: var(--muted);
 }
 
 .links {
@@ -192,9 +231,4 @@ a:focus-visible {
 /* Navigation active page indicator */
 .site-nav a.active {
   border-bottom: 2px solid var(--link-muted);
-}
-
-/* Tagline styling */
-.tagline {
-  color: var(--link-muted);
 }
