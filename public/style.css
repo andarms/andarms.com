@@ -3,7 +3,9 @@
   --bg: #0f0f0f;
   --fg: #eaeaea;
   --muted: #b3b3b3;
-  --link: #4ADE80;
+  --link: #50C878;
+  --link-hover: #3BAA5C;
+  --link-muted: #5FD670;
   --accent: #ffffff1a;
   /* Inform the browser we're using a dark color scheme (affects form controls, scrollbars, etc.) */
   color-scheme: dark;
@@ -52,6 +54,21 @@ body {
 .site-nav .brand {
   margin-right: auto;
   letter-spacing: 0.2px;
+  font-weight: 600;
+  color: var(--fg);
+  position: relative;
+  padding: 6px 12px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, rgba(80, 200, 120, 0.08), rgba(80, 200, 120, 0.03));
+  border: 1px solid rgba(80, 200, 120, 0.15);
+  transition: all 0.2s ease;
+}
+
+.site-nav .brand:hover {
+  background: linear-gradient(135deg, rgba(80, 200, 120, 0.12), rgba(80, 200, 120, 0.06));
+  border-color: rgba(80, 200, 120, 0.25);
+  color: var(--link-muted);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .container {
@@ -94,7 +111,14 @@ body {
 
 .post-list li,
 .project-list li {
-  margin: 0.5rem 0;
+  margin: 1.5rem 0;
+  padding: 0.75rem 0;
+}
+
+.project-list li .muted {
+  margin-top: 0.5rem;
+  margin-left: 0;
+  display: block;
 }
 
 .post-list a {
@@ -131,13 +155,13 @@ body {
 
 h1 {
   font-size: clamp(28px, 6vw, 44px);
-  margin: 0 0 6px;
+  margin: 0 0 16px;
   letter-spacing: 0.2px;
 }
 
 .tagline {
-  margin: 0 0 24px;
-  color: var(--muted);
+  margin: 0 0 36px;
+  color: var(--link-muted);
 }
 
 .links {
@@ -149,11 +173,28 @@ h1 {
 a {
   color: var(--link);
   text-decoration: none;
-  border-bottom: 2px dashed rgba(30, 157, 136, 0.4);
+  border-bottom: 2px dashed rgba(80, 200, 120, 0.35);
 }
 
 a:hover,
 a:focus-visible {
-  background-color: #ffffff;
+  background-color: var(--link);
   color: var(--bg);
+  border-bottom: 2px dashed rgba(80, 200, 120, 0.6);
+}
+
+/* Text selection highlighting */
+::selection {
+  background-color: rgba(80, 200, 120, 0.25);
+  color: var(--fg);
+}
+
+/* Navigation active page indicator */
+.site-nav a.active {
+  border-bottom: 2px solid var(--link-muted);
+}
+
+/* Tagline styling */
+.tagline {
+  color: var(--link-muted);
 }

@@ -8,6 +8,7 @@ const {
   description = "Personal site of Adrian Manjarres (andarms)",
 } = Astro.props as Props;
 const year = new Date().getFullYear();
+const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -30,8 +31,13 @@ const year = new Date().getFullYear();
     <header class="site-header">
       <nav class="site-nav" aria-label="Site">
         <a class="brand" href="/">@andarms</a>
-        <a href="/projects">Projects</a>
-        <a href="/blogs">Blogs</a>
+        <a
+          href="/projects"
+          class={currentPath.startsWith("/project") ? "active" : ""}>Projects</a
+        >
+        <a href="/blogs" class={currentPath.startsWith("/blog") ? "active" : ""}
+          >Blogs</a
+        >
       </nav>
     </header>
     <main class="container" role="main">
@@ -47,7 +53,7 @@ const year = new Date().getFullYear();
         alt="Colombia flag"
         loading="eager"
       />
-      <span>© {year} andarms</span>
+      <span>© {year} @andarms</span>
     </footer>
     <script
       is:inline
