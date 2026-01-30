@@ -40,6 +40,18 @@ relatedBlogs.sort(
     <h1>{entry.data.title}</h1>
     <p class="muted">{new Date(entry.data.date as any).toLocaleDateString()}</p>
 
+    <p>{entry.data.description}</p>
+    <p>
+      <a href={entry.data.url} target="_blank" rel="noopener noreferrer"
+        >{entry.data.url}</a
+      >
+    </p>
+    <p>
+      <a href={entry.data.repo} target="_blank" rel="noopener noreferrer"
+        >{entry.data.repo}</a
+      >
+    </p>
+
     {
       entry.data.thumbnail && (
         <div class="project-hero-thumbnail">
