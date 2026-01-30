@@ -6,7 +6,7 @@ import type { CollectionEntry } from "astro:content";
 export async function getStaticPaths() {
   const entries = await getCollection(
     "project",
-    (entry: CollectionEntry<"project">) => !entry.data.draft
+    (entry: CollectionEntry<"project">) => !entry.data.draft,
   );
   return entries.map((entry) => ({
     params: { slug: entry.slug },
@@ -16,6 +16,20 @@ export async function getStaticPaths() {
 
 const { entry } = Astro.props as { entry: CollectionEntry<"project"> };
 const { Content } = await entry.render();
+
+// Get related blog posts
+const relatedBlogs = await getCollection(
+  "blog",
+  (blogEntry: CollectionEntry<"blog">) =>
+    !blogEntry.data.draft && blogEntry.data.project === entry.slug,
+);
+
+// Sort by date (newest first)
+relatedBlogs.sort(
+  (a, b) =>
+    new Date(b.data.date as any).getTime() -
+    new Date(a.data.date as any).getTime(),
+);
 ---
 
 <Base
@@ -25,6 +39,37 @@ const { Content } = await entry.render();
   <article class="prose">
     <h1>{entry.data.title}</h1>
     <p class="muted">{new Date(entry.data.date as any).toLocaleDateString()}</p>
+
+    {
+      entry.data.thumbnail && (
+        <div class="project-hero-thumbnail">
+          <img
+            src={entry.data.thumbnail}
+            alt={`${entry.data.title} thumbnail`}
+            loading="eager"
+          />
+        </div>
+      )
+    }
+
     <Content />
   </article>
+
+  {
+    relatedBlogs.length > 0 && (
+      <section class="related-posts">
+        <h2>Related Blog Posts</h2>
+        <ul class="post-list">
+          {relatedBlogs.map((post) => (
+            <li>
+              <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+              <small class="muted">
+                {new Date(post.data.date as any).toLocaleDateString()}
+              </small>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 </Base>

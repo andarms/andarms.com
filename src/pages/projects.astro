@@ -5,12 +5,12 @@ import { getCollection, type CollectionEntry } from "astro:content";
 const projects: CollectionEntry<"project">[] = (
   await getCollection(
     "project",
-    (entry: CollectionEntry<"project">) => !entry.data.draft
+    (entry: CollectionEntry<"project">) => !entry.data.draft,
   )
 ).sort(
   (a: CollectionEntry<"project">, b: CollectionEntry<"project">) =>
     new Date(b.data.date as any).getTime() -
-    new Date(a.data.date as any).getTime()
+    new Date(a.data.date as any).getTime(),
 );
 ---
 
@@ -24,25 +24,40 @@ const projects: CollectionEntry<"project">[] = (
   <ul class="project-list">
     {
       projects.map((p) => (
-        <li>
-          <a href={`/project/${p.slug}`}>
-            <strong>{p.data.title}</strong>
-          </a>
-          {p.data.description && <span> — {p.data.description}</span>}
-          <div class="muted">
-            {p.data.url && (
-              <a href={p.data.url} target="_blank" rel="noopener noreferrer">
-                Site
-              </a>
-            )}
-            {p.data.repo && (
-              <>
-                {p.data.url && " · "}
-                <a href={p.data.repo} target="_blank" rel="noopener noreferrer">
-                  Repo
+        <li class="project-item">
+          {p.data.thumbnail && (
+            <div class="project-thumbnail">
+              <img
+                src={p.data.thumbnail}
+                alt={`${p.data.title} thumbnail`}
+                loading="lazy"
+              />
+            </div>
+          )}
+          <div class="project-content">
+            <a href={`/project/${p.slug}`}>
+              <strong>{p.data.title}</strong>
+            </a>
+            {p.data.description && <span> — {p.data.description}</span>}
+            <div class="muted">
+              {p.data.url && (
+                <a href={p.data.url} target="_blank" rel="noopener noreferrer">
+                  Site
                 </a>
-              </>
-            )}
+              )}
+              {p.data.repo && (
+                <>
+                  {p.data.url && " · "}
+                  <a
+                    href={p.data.repo}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Repo
+                  </a>
+                </>
+              )}
+            </div>
           </div>
         </li>
       ))

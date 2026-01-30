@@ -6,7 +6,7 @@ import type { CollectionEntry } from "astro:content";
 export async function getStaticPaths() {
   const posts = await getCollection(
     "blog",
-    (entry: CollectionEntry<"blog">) => !entry.data.draft
+    (entry: CollectionEntry<"blog">) => !entry.data.draft,
   );
   return posts.map((post) => ({
     params: { slug: post.slug },
@@ -16,6 +16,24 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props as { post: CollectionEntry<"blog"> };
 const { Content } = await post.render();
+
+// Get all posts sorted by date (newest first) for navigation
+const allPosts = await getCollection(
+  "blog",
+  (entry: CollectionEntry<"blog">) => !entry.data.draft,
+);
+
+allPosts.sort(
+  (a, b) =>
+    new Date(b.data.date as any).getTime() -
+    new Date(a.data.date as any).getTime(),
+);
+
+// Find current post index and get prev/next
+const currentIndex = allPosts.findIndex((p) => p.slug === post.slug);
+const prevPost =
+  currentIndex < allPosts.length - 1 ? allPosts[currentIndex + 1] : null; // Older post
+const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null; // Newer post
 ---
 
 <Base
@@ -27,4 +45,33 @@ const { Content } = await post.render();
     <p class="muted">{new Date(post.data.date as any).toLocaleDateString()}</p>
     <Content />
   </article>
+
+  {
+    (prevPost || nextPost) && (
+      <nav class="post-navigation" aria-label="Post navigation">
+        <div class="nav-links">
+          {prevPost && (
+            <a
+              href={`/blog/${prevPost.slug}`}
+              class="nav-link nav-prev"
+              rel="prev"
+            >
+              <span class="nav-label">← Previous</span>
+              <span class="nav-title">{prevPost.data.title}</span>
+            </a>
+          )}
+          {nextPost && (
+            <a
+              href={`/blog/${nextPost.slug}`}
+              class="nav-link nav-next"
+              rel="next"
+            >
+              <span class="nav-label">Next →</span>
+              <span class="nav-title">{nextPost.data.title}</span>
+            </a>
+          )}
+        </div>
+      </nav>
+    )
+  }
 </Base>
