@@ -43,6 +43,17 @@ const nextPost = currentIndex > 0 ? allPosts[currentIndex - 1] : null; // Newer 
   <article class="prose">
     <h1>{post.data.title}</h1>
     <p class="muted">{new Date(post.data.date as any).toLocaleDateString()}</p>
+    {
+      post.data.tags && post.data.tags.length > 0 && (
+        <div class="tags">
+          {post.data.tags.map((tag) => (
+            <a href={`/tags/${tag}`} class="tag">
+              #{tag}
+            </a>
+          ))}
+        </div>
+      )
+    }
     <Content />
   </article>
 

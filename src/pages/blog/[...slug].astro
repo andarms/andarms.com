@@ -6,7 +6,7 @@ import type { CollectionEntry } from "astro:content";
 export async function getStaticPaths() {
   const posts = await getCollection(
     "blog",
-    (entry: CollectionEntry<"blog">) => !entry.data.draft
+    (entry: CollectionEntry<"blog">) => !entry.data.draft,
   );
   return posts.map((post) => ({
     params: { slug: post.slug },
@@ -25,6 +25,17 @@ const { Content } = await post.render();
   <article class="prose">
     <h1>{post.data.title}</h1>
     <p class="muted">{new Date(post.data.date as any).toLocaleDateString()}</p>
+    {
+      post.data.tags && post.data.tags.length > 0 && (
+        <div class="tags">
+          {post.data.tags.map((tag) => (
+            <a href={`/tags/${tag}`} class="tag">
+              {tag}
+            </a>
+          ))}
+        </div>
+      )
+    }
     <Content />
   </article>
 </Base>

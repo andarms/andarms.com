@@ -1,0 +1,57 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const posts = await getCollection(
+    "blog",
+    (entry: CollectionEntry<"blog">) => !entry.data.draft,
+  );
+
+  // Get all unique tags
+  const allTags = new Set<string>();
+  posts.forEach((post) => {
+    post.data.tags?.forEach((tag) => allTags.add(tag));
+  });
+
+  // Create a path for each tag
+  return Array.from(allTags).map((tag) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: posts.filter((post) => post.data.tags?.includes(tag)),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props as {
+  tag: string;
+  posts: CollectionEntry<"blog">[];
+};
+
+// Sort posts by date (newest first)
+posts.sort(
+  (a, b) =>
+    new Date(b.data.date as any).getTime() -
+    new Date(a.data.date as any).getTime(),
+);
+---
+
+<Base title={`#${tag} — andarms`} description={`Posts tagged with ${tag}`}>
+  <h1>#{tag}</h1>
+  <p class="tagline">Posts tagged with {tag}.</p>
+
+  <ul class="post-list">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+          <small class="muted">
+            {new Date(post.data.date as any).toLocaleDateString()}
+          </small>
+        </li>
+      ))
+    }
+  </ul>
+</Base>

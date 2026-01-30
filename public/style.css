@@ -370,3 +370,20 @@ a:focus-visible {
 .site-nav a.active {
   border-bottom: 2px solid var(--link-muted);
 }
+
+/* Tags styling */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 16px 0;
+}
+
+
+.tag {
+  color: var(--muted);
+}
+
+.tag:hover {
+  color: white
+}
