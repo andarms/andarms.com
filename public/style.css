@@ -334,6 +334,34 @@ h1 {
   font-size: clamp(28px, 6vw, 44px);
   margin: 0 0 16px;
   letter-spacing: 0.2px;
+  position: relative;
+  z-index: 2;
+}
+
+/* Title container with Japanese background */
+.title-container {
+  position: relative;
+  margin-bottom: 16px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.japanese-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  font-size: clamp(28px, 6vw, 60px);
+  font-weight: 900;
+  color: var(--accent);
+  opacity: 0.5;
+  z-index: 1;
+  user-select: none;
+  pointer-events: none;
+  letter-spacing: 0.1em;
+  margin: 0;
+  padding: 0;
 }
 
 .tagline {
